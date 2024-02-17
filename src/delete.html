@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update</title>
+</head>
+
+<body style="background-color:#4999a6; font-family:Optima">
+	<nav>
+		<ul>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./search.html">Explore</a></li>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./delete.html">Edit Information</a></li>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./home.html">Home</a></li>
+		</ul>
+	</nav>
+	<h1 style="font-family:Optima">DelayAware</h1>
+	<h2>Add, Modify, or Remove an airline!</h2>
+	<!-- Uses the submit.php file -->
+	<!-- <form action="submit.php" method="post"> -->
+	<!-- <label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+	<!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+	<!-- </form> -->
+	<h3>Add: Enter in the new airline's IATA Code and Name</h3>
+	<input type="text" id="code" placeholder="IATA Code">
+	<input type="text" id="name" placeholder="Airline Name">
+
+	<button onclick="insert()">Insert</button>
+
+	<h3>Modify: Enter in the old airline's IATA Code and Name</h3>
+	<input type="text" id="ocode" placeholder="Old IATA Code">
+	<input type="text" id="oname" placeholder="Old Airline Name">
+	<button onclick="update()">Update</button>
+
+	<h3>Remove: Enter in the airline's IATA Code and Name</h3>
+	<input type="text" id="dcode" placeholder="IATA Code">
+	<input type="text" id="dname" placeholder="Airline Name">
+
+	<button onclick="remove()">Delete</button>
+
+	<h2>Delayed Flight? Let Us Know!</h2>
+	<input type="text" id="delcode" placeholder="Airline IATA Code">
+	<input type="text" id="delnum" placeholder="Aircraft Tail #">
+	<input type="text" id="delo" placeholder="Origin IATA Code">
+	<input type="text" id="deld" placeholder="Destination IATA Code">
+	<input type="text" id="delmon" placeholder="Month">
+	<input type="text" id="delday" placeholder="Day">
+	<input type="text" id="delyear" placeholder="Year">
+	<input type="text" id="delflnum" placeholder="Flight #">
+	<input type="text" id="delddel" placeholder="Departure Delay">
+	<input type="text" id="deladel" placeholder="Arrival Delay">
+	<button onclick="addflight()">Share</button>
+
+	<p id="record"></p>
+
+	<!-- <h2>Input Delete Query:</h2> -->
+	<!-- Uses the submit.php file -->
+	<!-- <form action="submit.php" method="post">
+		<label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+	<!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+	<!-- </form> -->
+
+	<!-- <h2>Rows Updated:</h2> -->
+	<!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+	<!-- <button onclick="displayArray()">Display Fields</button> -->
+	<!-- <div id="arrayContainer"></div> -->
+	<script>
+		// Create an array
+		// var myArray = ["airline", "flight", "etc", "etc"];
+
+		// Function to display the array
+		// function displayArray() {
+		// 	var arrayContainer = document.getElementById("arrayContainer");
+		// 	arrayContainer.innerHTML = myArray.join(", ");
+		// }
+
+		async function remove() {
+			let code = document.getElementById("dcode");
+			let name = document.getElementById("dname");
+
+			var element = document.getElementById("record");
+			element.innerHTML = "Deleted";
+
+			await fetch('http://localhost:3000/delete?code=' + code.value + "&name=" + name.value)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+		}
+
+		async function insert() {
+			let code = document.getElementById("code");
+			let name = document.getElementById("name");
+
+			var element = document.getElementById("record");
+			element.innerHTML = "Inserted";
+
+			await fetch('http://localhost:3000/insert?code=' + code.value + "&name=" + name.value)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+		}
+
+		async function update() {
+			let code = document.getElementById("code");
+			let name = document.getElementById("name");
+			let ocode = document.getElementById("ocode");
+			let oname = document.getElementById("oname");
+
+			var element = document.getElementById("record");
+			element.innerHTML = "Updated";
+
+			await fetch('http://localhost:3000/update?code=' + code.value + "&name=" + name.value + "&ocode=" + ocode.value + "&oname=" + oname.value)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+		}
+
+		async function addflight() {
+			let delcode = document.getElementById("delcode").value;
+			let delnum = document.getElementById("delnum").value;
+			let delo = document.getElementById("delo").value;
+			let deld = document.getElementById("deld").value;
+			let delmon = document.getElementById("delmon").value;
+			let delday = document.getElementById("delday").value;
+			let delyear = document.getElementById("delyear").value;
+			let delflnum = document.getElementById("delflnum").value;
+			let delddel = document.getElementById("delddel").value;
+			let deladel = document.getElementById("deladel").value;
+
+			await fetch('http://localhost:3000/addflight?delcode=' + delcode + "&delnum=" +
+				delnum + "&delo=" + delo + "&deld=" + deld + "&delmon=" + delmon + "&delday=" + delday + "&delyear="
+				+ delyear + "&delflnum=" + delflnum + "&delddel=" + delddel + "&deladel=" + deladel)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+
+		}
+	</script>
+</body>
+
+</html>

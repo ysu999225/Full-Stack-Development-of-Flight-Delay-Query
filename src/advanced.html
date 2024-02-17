@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Advanced</title>
+</head>
+
+<body>
+	<h1>ADVANCED</h1>
+
+	<h2>First advanced query: Top 5 Airports with Arrival Delay > Departure Delay</h2>
+	<!-- Uses the submit.php file -->
+	<!-- <form action="submit.php" method="post">
+		<label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+	<!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+	<!-- </form> -->
+	<h2>Output:</h2>
+	<!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+	<p id="display1"></p>
+	<button onclick="displayArray1()">Display Fields</button>
+	<div id="arrayContainer"></div>
+	<script>
+		// Create an array
+		// var myArray = ["airline", "flight", "etc", "etc"];
+
+		// Function to display the array
+		// function displayArray() {
+		// 	var arrayContainer = document.getElementById("arrayContainer");
+		// 	arrayContainer.innerHTML = myArray.join(", ");
+		// }
+
+		async function displayArray1() {
+			var element = document.getElementById("display1");
+
+			var fdata;
+			await fetch('http://localhost:3000/adv1')
+				.then((response) => response.json())
+				.then((data) => fdata = data.finalstr);
+			// .then((data) => );
+
+			element.innerHTML = fdata;
+			// .then((data) => element.innerHTML = data);
+		}
+	</script>
+
+	<h2>Second advanced query: Top 5 Airports With Flights to Most Destinations</h2>
+	<!-- Uses the submit.php file -->
+	<!-- <form action="submit.php" method="post">
+		<label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+	<!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+	<!-- </form> -->
+	<h2>Output:</h2>
+	<!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+	<p id="display2"></p>
+	<button onclick="displayArray2()">Display Fields</button>
+	<div id="arrayContainer"></div>
+	<script>
+		// Create an array
+		// var myArray = ["airline", "flight", "etc", "etc"];
+
+		// Function to display the array
+		// function displayArray() {
+		// 	var arrayContainer = document.getElementById("arrayContainer");
+		// 	arrayContainer.innerHTML = myArray.join(", ");
+		// }
+		async function displayArray2() {
+			var element = document.getElementById("display2");
+
+			var fdata;
+			await fetch('http://localhost:3000/adv2')
+				.then((response) => response.json())
+				.then((data) => fdata = data.finalstr);
+			// .then((data) => );
+
+			element.innerHTML = fdata;
+		}
+	</script>
+</body>
+
+</html>

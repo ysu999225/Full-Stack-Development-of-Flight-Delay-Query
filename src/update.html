@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update</title>
+</head>
+
+<body>
+	<nav>
+		<ul>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./search.html">Explore</a></li>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./delete.html">Edit Information</a></li>
+			<li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+					href="./home.html">Home</a></li>
+		</ul>
+	</nav>
+	<h1 style="font-family:Optima">DelayAware</h1>
+	<h1>UPDATE and INSERT</h1>
+
+	<h2>Input Update or Insert Query (fill out all fields below for update):</h2>
+	<!-- Uses the submit.php file -->
+	<!-- <form action="submit.php" method="post"> -->
+	<!-- <label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+	<!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+	<!-- </form> -->
+	<h3>Enter in the new airline's IATA Code and Name</h3>
+	<input type="text" id="code" placeholder="IATA Code">
+	<input type="text" id="name" placeholder="Airline Name">
+
+	<button onclick="insert()">Insert</button>
+
+	<h3>Enter in the old airline's IATA Code and Name</h3>
+	<input type="text" id="ocode" placeholder="Old IATA Code">
+	<input type="text" id="oname" placeholder="Old Airline Name">
+	<button onclick="update()">Update</button>
+
+	<p id="record"></p>
+
+	<!-- <h2>Rows Updated:</h2> -->
+	<!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+	<!-- <button onclick="displayArray()">Display Fields</button>
+	<div id="arrayContainer"></div> -->
+	<script>
+		// Create an array
+		// var myArray = ["airline", "flight", "etc", "etc"];
+
+		// Function to display the array
+		// function displayArray() {
+		// 	var arrayContainer = document.getElementById("arrayContainer");
+		// 	arrayContainer.innerHTML = myArray.join(", ");
+		// }
+		async function insert() {
+			let code = document.getElementById("code");
+			let name = document.getElementById("name");
+
+			var element = document.getElementById("record");
+			element.innerHTML = "Inserted";
+
+			await fetch('http://localhost:3000/insert?code=' + code.value + "&name=" + name.value)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+		}
+
+		async function update() {
+			let code = document.getElementById("code");
+			let name = document.getElementById("name");
+			let ocode = document.getElementById("ocode");
+			let oname = document.getElementById("oname");
+
+			var element = document.getElementById("record");
+			element.innerHTML = "Updated";
+
+			await fetch('http://localhost:3000/update?code=' + code.value + "&name=" + name.value + "&ocode=" + ocode.value + "&oname=" + oname.value)
+				.then((response) => response.json())
+				.then((data) => console.log(data));
+		}
+	</script>
+</body>
+
+</html>

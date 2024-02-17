@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+</head>
+
+<body style="background-color:#4999a6; font-family:Optima">
+
+  <body style="background-color:#000000; font-family:Optima; color:#4999a6;">
+    <nav>
+      <ul>
+
+        <li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+            href="./search.html">Explore</a></li>
+        <li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+            href="./delete.html">Edit Information</a></li>
+        <li style="display: inline; float: right; padding: 16px"><a style="display: block; color: #ffffff"
+            href="./home.html">Home</a></li>
+      </ul>
+    </nav>
+    <h1 style="font-family:Optima">DelayAware</h1>
+    <h2>Number of Delayed Flights From an Airport</h2>
+    <input type="text" id="search-input" placeholder="Departure Airport Code">
+    <button onclick="searchflights()">Search</button>
+    <!-- <ul id="flight-list"></ul> -->
+    <p id="countflights"></p>
+
+    <h2>Worst Airports To Land In</h2>
+    <!-- Uses the submit.php file -->
+    <!-- <form action="submit.php" method="post">
+		<label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+    <!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+    <!-- </form> -->
+    <!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+    <input type="text" id="ad1-input" placeholder="Number of Airports">
+    <button onclick="displayArray1()">Run</button>
+    <p id="display1"></p>
+    <div id="arrayContainer"></div>
+    <script>
+      // Create an array
+      // var myArray = ["airline", "flight", "etc", "etc"];
+
+      // Function to display the array
+      // function displayArray() {
+      // 	var arrayContainer = document.getElementById("arrayContainer");
+      // 	arrayContainer.innerHTML = myArray.join(", ");
+      // }
+
+      async function displayArray1() {
+        var element = document.getElementById("display1");
+        let ad1input = document.getElementById("ad1-input");
+
+        var fdata;
+        await fetch('http://localhost:3000/adv1?limit=' + ad1input.value)
+          .then((response) => response.json())
+          .then((data) => fdata = data.finalstr);
+        // .then((data) => );
+
+        element.innerHTML = fdata;
+        // .then((data) => element.innerHTML = data);
+      }
+    </script>
+
+    <h2>Airports with the Best Connectivity</h2>
+    <!-- Uses the submit.php file -->
+    <!-- <form action="submit.php" method="post">
+		<label for="name">Query:</label>
+		<input type="text" id="name" name="name"><br> -->
+    <!-- <label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<input type="submit" value="Submit"> -->
+    <!-- </form> -->
+    <!-- We may want to change how we display the rows updated. Right now, I just have a display array function -->
+    <input type="text" id="ad2-input" placeholder="Number of Airports">
+    <button onclick="displayArray2()">Run</button>
+    <p id="display2"></p>
+    <div id="arrayContainer"></div>
+
+    <h2>Airports With The Worst Overall Delay</h2>
+    <input type="text" id="proc-input" placeholder="Number of Airports">
+    <button onclick="displayProc()">Run</button>
+    <p id="display3"></p>
+
+    <script>
+
+      async function searchflights() {
+        let searchInput = document.getElementById("search-input");
+        let searchQuery = searchInput.value.trim().toLowerCase();
+
+        if (searchQuery === "") {
+          return
+        }
+
+        // const Http = new XMLHttpRequest();
+        // const url = 'http://localhost:3000/search?query=' + searchQuery;
+        // Http.open("GET", url);
+        // Http.send();
+
+        // Http.onreadystatechange = (e) => {
+        //   console.log("THISIS" + Http.responseXML)
+        // }
+        var flightscount;
+        await fetch('http://localhost:3000/search?query=' + searchQuery)
+          .then((response) => response.json())
+          .then((data) => flightscount = data.count);
+
+        // $.get('http://localhost:3000/search?query=' + searchQuery, function (responseText) {
+        //   alert(responseText);
+        // });
+
+        // searchInput.value = "";
+        // let flights = ["Flight1", "Test2", "CN12515", "Delayed3", "Something5", "346323", "**&%%"];
+        // flights.forEach(function (flight) {
+        //   if (flight.toLowerCase().includes(searchQuery)) {
+        //     addflightToList(flight);
+        //   }
+        // });
+        var element = document.getElementById("countflights");
+        element.innerHTML = String(flightscount) + " Flights";
+
+      }
+
+      async function displayArray2() {
+        var element = document.getElementById("display2");
+        let ad2input = document.getElementById("ad2-input");
+
+        var fdata;
+        await fetch('http://localhost:3000/adv2?limit=' + ad2input.value)
+          .then((response) => response.json())
+          .then((data) => fdata = data.finalstr);
+        // .then((data) => );
+
+        element.innerHTML = fdata;
+      }
+
+      async function displayProc() {
+        var element = document.getElementById("display3");
+        let procinput = document.getElementById("proc-input");
+
+        var fdata;
+        await fetch('http://localhost:3000/proc?limit=' + procinput.value)
+          .then((response) => response.json())
+          .then((data) => fdata = data.finalstr);
+        // .then((data) => );
+
+        element.innerHTML = fdata;
+      }
+
+
+
+
+    </script>
+  </body>
+
+</html>
